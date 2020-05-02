@@ -24,12 +24,12 @@ ENV LIBWEBSOCKETS_VERSION=v2.4.2
 
 COPY run.sh /
 
-RUN apk --no-cache add --virtual buildDeps git cmake build-base openssl-dev c-ares-dev util-linux-dev hiredis-dev postgresql-dev curl-dev; \
+RUN apk --no-cache add --virtual buildDeps git cmake build-base openssl-dev c-ares-dev util-linux-dev postgresql-dev; \
     chmod +x /run.sh && \
     mkdir -p /var/lib/mosquitto && \
     touch /var/lib/mosquitto/.keep && \
     mkdir -p /etc/mosquitto.d && \
-    apk add hiredis postgresql-libs libuuid c-ares openssl curl ca-certificates && \
+    apk add postgresql-libs libuuid c-ares openssl ca-certificates && \
     git clone -b ${LIBWEBSOCKETS_VERSION} https://github.com/warmcat/libwebsockets && \
     cd libwebsockets && \
     cmake . \
@@ -74,10 +74,10 @@ RUN apk --no-cache add --virtual buildDeps git cmake build-base openssl-dev c-ar
     sed -i "s/BACKEND_CDB ?= no/BACKEND_CDB ?= no/" config.mk && \
     sed -i "s/BACKEND_MYSQL ?= yes/BACKEND_MYSQL ?= no/" config.mk && \
     sed -i "s/BACKEND_SQLITE ?= no/BACKEND_SQLITE ?= no/" config.mk && \
-    sed -i "s/BACKEND_REDIS ?= no/BACKEND_REDIS ?= yes/" config.mk && \
+    sed -i "s/BACKEND_REDIS ?= no/BACKEND_REDIS ?= no/" config.mk && \
     sed -i "s/BACKEND_POSTGRES ?= no/BACKEND_POSTGRES ?= yes/" config.mk && \
     sed -i "s/BACKEND_LDAP ?= no/BACKEND_LDAP ?= no/" config.mk && \
-    sed -i "s/BACKEND_HTTP ?= no/BACKEND_HTTP ?= yes/" config.mk && \
+    sed -i "s/BACKEND_HTTP ?= no/BACKEND_HTTP ?= no/" config.mk && \
     sed -i "s/BACKEND_JWT ?= no/BACKEND_JWT ?= no/" config.mk && \
     sed -i "s/BACKEND_MONGO ?= no/BACKEND_MONGO ?= no/" config.mk && \
     sed -i "s/BACKEND_FILES ?= no/BACKEND_FILES ?= no/" config.mk && \
